@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hzit.dao.mapper.SubjectMapper">
+
+    <sql id="subjectBaseColumnSql">
+        SubjectNo,
+        SubjectName,
+        ClassHour,
+        GradeID
+    </sql>
+
+    <sql id="subjectBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="map.subjectNo!=null">
+                    SubjectNo = #{map.subjectNo}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.subjectName)">
+                    AND SubjectName = #{map.subjectName}
+                </if>
+                <if test="map.classHour!=null">
+                    AND ClassHour = #{map.classHour}
+                </if>
+                <if test="map.gradeId!=null">
+                    AND GradeID = #{map.gradeId}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertSubject" parameterType="com.hzit.dao.entity.Subject">
+        INSERT INTO subject(
+        <include refid="subjectBaseColumnSql"/>
+        )VALUES(
+            #{subjectNo},
+            #{subjectName},
+            #{classHour},
+            #{gradeId}
+        )
+    </insert>
+
+    
+    <delete id="deleteSubjectBySubjectNo" parameterType="Integer">
+        DELETE FROM subject WHERE SubjectNo = #{subjectNo}
+    </delete>
+
+    <update id="updateSubject" parameterType="com.hzit.dao.entity.Subject">
+        UPDATE subject
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(subjectName)">
+                SubjectName = #{subjectName} ,
+            </if>
+            <if test="classHour!=null">
+                ClassHour = #{classHour} ,
+            </if>
+            <if test="gradeId!=null">
+                GradeID = #{gradeId} ,
+            </if>
+        </set>
+        WHERE SubjectNo = #{subjectNo}
+    </update>
+
+    <select id="searchSubjectByParams" parameterType="map" resultType="com.hzit.dao.vo.SubjectVo">
+        SELECT subject.SubjectNo,subject.SubjectName,subject.ClassHour,gradeName,subject.GradeID
+        FROM subject
+        JOIN grade ON subject.GradeID=grade.GradeID
+        <include refid="subjectBaseWhereSql"/>
+    </select>
+
+    <resultMap type="com.hzit.dao.entity.Subject" id="subjectMap">
+        <id column="SubjectNo" property="subjectNo"/>
+        <result column="SubjectName" property="subjectName"/>
+        <result column="ClassHour" property="classHour"/>
+        <result column="GradeID" property="gradeId"/>
+    </resultMap>
+
+</mapper>

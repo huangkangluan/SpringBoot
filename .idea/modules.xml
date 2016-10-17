@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/SpringBoot.iml" filepath="$PROJECT_DIR$/SpringBoot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SpringBoot-Core/SpringBoot-Core.iml" filepath="$PROJECT_DIR$/SpringBoot-Core/SpringBoot-Core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SpringBoot-Web/SpringBoot-Web.iml" filepath="$PROJECT_DIR$/SpringBoot-Web/SpringBoot-Web.iml" />
+    </modules>
+  </component>
+</project>
